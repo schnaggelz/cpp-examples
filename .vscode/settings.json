@@ -1,4 +1,4 @@
 {
-    "cmake.sourceDirectory": "${workspaceFolder}/callbacks",
-    "cmake.configureOnOpen": false
+    "clang-format.executable": "/bin/clang-format-14",
+    "clang-format.language.cpp.style": "file"
 }

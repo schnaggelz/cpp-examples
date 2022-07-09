@@ -1,0 +1,15 @@
+BasedOnStyle: Google
+IndentWidth: 4
+
+Language: Cpp
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+    AfterClass: true
+    AfterFunction: true
+    SplitEmptyFunction: true
+    AfterNamespace: true
+    AfterFunction: true
+    SplitEmptyFunction: true
+
+AllowShortFunctionsOnASingleLine: None
