@@ -17,7 +17,7 @@ class Callback
 {
 };
 
-}  // namespace remote
-}  // namespace nxt
+}  // namespace callbacks
+}  // namespace examples
 
 #endif  // __EXAMPLES_CALLBACK_HPP__

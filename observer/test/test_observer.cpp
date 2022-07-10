@@ -1,40 +1,71 @@
 #include <gtest/gtest.h>
 
-
-class Notification1
-{
-
-};
-
-class Notification2
-{
-
-};
-
-class Notification3
-{
-
-};
-
-template <typename NotificationT>
-class Observer
-{
-
-};
-
-template <template <typename> class T, typename... Args>
-class for_each_class : T<Args>...
-{
-};
-
-template class for_each_class<Observer, Notification1, Notification2, Notification3>;
+#include <typeindex>
 
 struct TestFixture : testing::Test
 {
-
 };
 
-TEST_F(TestFixture, X)
+template <typename T>
+struct Event
 {
-    Observer<Notification1> o1;
+    using Type = T;
+
+    Event(T type) : m_type(type)
+    {
+    }
+
+    Type m_type;
+    bool m_handled;
+};
+
+enum class ChannelOfferEventType
+{
+    OFFER,
+    STOP_OFFER,
+    UNDEFINED
+};
+
+enum class ChannelSubscriptionEventType
+{
+    SUBSCRIBE,
+    UNSIBSCRIBE,
+    UNDEFINED
+};
+
+class ChannelOfferEvent : public Event<ChannelOfferEventType>
+{
+    ChannelOfferEvent() : Event<ChannelOfferEventType>(ChannelOfferEventType::UNDEFINED){};
+    virtual ~ChannelOfferEvent() = default;
+};
+
+class ChannelSubscriptionEvent : public Event<ChannelSubscriptionEventType>
+{
+    ChannelSubscriptionEvent() : Event<ChannelSubscriptionEventType>(ChannelSubscriptionEventType::UNDEFINED){};
+    virtual ~ChannelSubscriptionEvent() = default;
+};
+
+template <typename T>
+struct Dispatcher
+{
+    using SlotType = std::function<void(const Event<T>&)>; // replace by heap free alternative
+
+    SlotType m_slot;
+};
+
+class Observer
+{
+    void handle(const Event<ChannelOfferEventType>& event)
+    {
+        if (event.m_type == ChannelOfferEventType::OFFER)
+        {
+
+        }
+    }
+};
+
+TEST_F(TestFixture, Sandbox)
+{
+    Dispatcher<ChannelOfferEventType> dispatcher1;
+    
 }
