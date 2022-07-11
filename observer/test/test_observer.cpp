@@ -23,28 +23,20 @@ enum class ChannelSubscriptionEventType
     UNDEFINED
 };
 
-class ChannelOfferEvent : public examples::observer::Event<ChannelOfferEventType>
+struct ChannelOfferEvent : public examples::observer::Event<ChannelOfferEventType>
 {
     ChannelOfferEvent() : Event<ChannelOfferEventType>(ChannelOfferEventType::UNDEFINED){};
     virtual ~ChannelOfferEvent() = default;
 };
 
-class ChannelSubscriptionEvent : public examples::observer::Event<ChannelSubscriptionEventType>
+struct ChannelSubscriptionEvent : public examples::observer::Event<ChannelSubscriptionEventType>
 {
     ChannelSubscriptionEvent()
         : examples::observer::Event<ChannelSubscriptionEventType>(ChannelSubscriptionEventType::UNDEFINED){};
     virtual ~ChannelSubscriptionEvent() = default;
 };
 
-template <typename T>
-struct Dispatcher
-{
-    using SlotType = std::function<void(const examples::observer::Event<T>&)>;  // replace by heap free alternative
-
-    SlotType m_slot;
-};
-
-class Observer
+struct Observer
 {
     void handle(const examples::observer::Event<ChannelOfferEventType>& event)
     {
@@ -55,5 +47,14 @@ class Observer
 
 TEST_F(TestFixture, Sandbox)
 {
-    Dispatcher<ChannelOfferEventType> dispatcher1;
+    using ChannelOfferEventDispatcher = examples::observer::Dispatcher<ChannelOfferEventType, 2>;
+
+    ChannelOfferEventDispatcher dispatcher1;
+
+    Observer observer;
+
+    dispatcher1.subscribe(ChannelOfferEventType::OFFER, ChannelOfferEventDispatcher::Callable::create<Observer, &Observer::handle>(observer));
+
+    ChannelOfferEvent e1;
+    dispatcher1.dispatch(e1);
 }
