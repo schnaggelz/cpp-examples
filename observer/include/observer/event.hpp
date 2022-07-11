@@ -17,10 +17,11 @@ namespace observer
 template <typename T>
 class Event
 {
-   public:
+  public:
     using Type = T;
 
-    Event(const T& type) : m_type(type)
+    Event(const T& type)
+        : m_type(type)
     {
     }
 
@@ -29,9 +30,14 @@ class Event
         return m_type;
     }
 
-   private:
+    bool isHandled() const
+    {
+        return m_handled;
+    }
+
+  private:
     const Type m_type;
-    bool m_handled;
+    bool m_handled{false};
 };
 
 }  // namespace observer

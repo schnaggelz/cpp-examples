@@ -14,6 +14,10 @@ BraceWrapping:
     AfterNamespace: true
     AfterFunction: true
     SplitEmptyFunction: true
+    AfterUnion: true
+    BeforeElse: true
+    BeforeWhile: true
+    AfterControlStatement: Always
 
 AccessModifierOffset: -2
 AllowShortFunctionsOnASingleLine: None

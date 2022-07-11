@@ -3,6 +3,7 @@
 #include <typeindex>
 
 #include "observer/event.hpp"
+#include "observer/dispatcher.hpp"
 
 struct TestFixture : testing::Test
 {

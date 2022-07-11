@@ -20,6 +20,11 @@ target_include_directories(${PROJECT_NAME}
         ${CMAKE_CURRENT_LIST_DIR}/include
 )
 
+target_link_libraries(${PROJECT_NAME}
+    PUBLIC
+        examples::callback
+)
+
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 14)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER ${HEADER_FILES})
