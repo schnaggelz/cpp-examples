@@ -15,31 +15,51 @@ namespace examples
 {
 namespace callbacks
 {
+
+template <typename T>
+class Callable;
+
 template <typename ReturnT, typename... ParamTs>
-class Callable
+class Callable<ReturnT(ParamTs...)>
 {
-    using Function = ReturnT (*)(void* object, ParamTs...);
-
+  using Stub = ReturnT (*)(void* object, ParamTs...);
+  
   public:
-    Callable(void* object, ParamTs... params)
-      : m_function()
-      , m_object(object)
-    {
-    }
-
+    ///@brief Call the calllable
+    ///@param args Function arguments (see ParamTs)
+    ///@return Function return value (see ReturnT)
     ReturnT operator()(ParamTs... args) const
     {
-        return (*m_function)(m_object, std::forward<ParamTs>(args)...);
+        return (*m_stub)(m_object, std::forward<ParamTs>(args)...);
     }
 
-    operator bool() const
+    ///@brief Create callable from instance and method
+    ///@param instance Call context object
+    ///@return Function return value (see ReturnT)
+    template <typename ObjectT, ReturnT (ObjectT::*Method)(ParamTs...)>
+    static constexpr Callable create(ObjectT& object)
     {
-        return (m_function != nullptr && m_object != nullptr);
+        return Callable((void*)(&object), createMethodStub<ObjectT, Method>);
     }
 
   private:
-    Function m_function = nullptr;
+    constexpr Callable(void* object, Stub stub)
+        : m_object(object),
+          m_stub(stub)
+    {
+    }
+
+    template <typename ObjectT, ReturnT (ObjectT::*Method)(ParamTs...)>
+    static constexpr ReturnT createMethodStub(void* object, ParamTs... params)
+    {
+        ObjectT* object_ptr = static_cast<ObjectT*>(object);
+        return (object_ptr->*Method)(std::forward<ParamTs>(params)...);
+    }
+
+  private:
+    
     void* m_object = nullptr;
+    Stub m_stub = nullptr;
 };
 
 }  // namespace callbacks

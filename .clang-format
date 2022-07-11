@@ -17,3 +17,4 @@ BraceWrapping:
 
 AccessModifierOffset: -2
 AllowShortFunctionsOnASingleLine: None
+PackConstructorInitializers: Never
