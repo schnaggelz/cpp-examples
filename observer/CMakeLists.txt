@@ -12,7 +12,7 @@ set(HEADER_FILES
 
 add_library(${PROJECT_NAME} STATIC
     ${HEADER_FILES}
-    src/observer.cpp
+    src/dispatcher.cpp
 )
 
 target_include_directories(${PROJECT_NAME}

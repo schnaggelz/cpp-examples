@@ -9,11 +9,13 @@
 #ifndef __EXAMPLES_OBSERVER_DISPATCHER_HPP__
 #define __EXAMPLES_OBSERVER_DISPATCHER_HPP__
 
+#include "observer/event.hpp"
+
+#include "callback/callable.hpp"
+
 #include <array>
 #include <cstdint>
 #include <tuple>
-
-#include "callback/callable.hpp"
 
 namespace examples
 {
