@@ -19,4 +19,6 @@ target_link_libraries(${PROJECT_NAME}
         GTest::gtest_main
 )
 
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 14)
+
 add_test(all_tests ${PROJECT_NAME})

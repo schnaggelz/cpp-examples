@@ -15,4 +15,5 @@ BraceWrapping:
     AfterFunction: true
     SplitEmptyFunction: true
 
+AccessModifierOffset: -2
 AllowShortFunctionsOnASingleLine: None

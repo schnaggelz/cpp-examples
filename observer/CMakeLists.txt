@@ -20,6 +20,8 @@ target_include_directories(${PROJECT_NAME}
         ${CMAKE_CURRENT_LIST_DIR}/include
 )
 
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 14)
+
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER ${HEADER_FILES})
 
 add_library(examples::observer ALIAS ${PROJECT_NAME})

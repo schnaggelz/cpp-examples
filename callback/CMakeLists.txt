@@ -5,12 +5,12 @@ option(ENABLE_TESTING "Turn on to enable tests" ON)
 project(callback CXX)
 
 set(HEADER_FILES
-    ${CMAKE_CURRENT_LIST_DIR}/include/callback.hpp
+    include/callback/callable.hpp
 )
 
 add_library(${PROJECT_NAME} STATIC
     ${HEADER_FILES}
-    src/callback.cpp
+    src/callable.cpp
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -18,7 +18,11 @@ target_include_directories(${PROJECT_NAME}
         ${CMAKE_CURRENT_LIST_DIR}/include
 )
 
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 14)
+
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER ${HEADER_FILES})
+
+add_library(examples::callback ALIAS ${PROJECT_NAME})
 
 if (ENABLE_TESTING)                           
     enable_testing()
@@ -28,5 +32,5 @@ endif()
 install(TARGETS ${PROJECT_NAME}
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
-    PUBLIC_HEADER DESTINATION include/callback
+    PUBLIC_HEADER DESTINATION include
 )
