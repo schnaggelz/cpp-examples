@@ -1,4 +1,7 @@
 {
     "clang-format.executable": "/bin/clang-format-14",
-    "clang-format.language.cpp.style": "file"
+    "clang-format.language.cpp.style": "file",
+    "files.associations": {
+        "functional": "cpp"
+    }
 }

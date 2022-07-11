@@ -1,12 +1,15 @@
 BasedOnStyle: Google
 IndentWidth: 4
+ColumnLimit: 120
 
 Language: Cpp
 
 BreakBeforeBraces: Custom
 BraceWrapping:
     AfterClass: true
+    AfterStruct: true
     AfterFunction: true
+    AfterEnum: true
     SplitEmptyFunction: true
     AfterNamespace: true
     AfterFunction: true

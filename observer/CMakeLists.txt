@@ -5,7 +5,9 @@ option(ENABLE_TESTING "Turn on to enable tests" ON)
 project(observer CXX)
 
 set(HEADER_FILES
-    ${CMAKE_CURRENT_LIST_DIR}/include/observer.hpp
+    include/observer/dispatcher.hpp
+    include/observer/event.hpp
+    include/observer/observer.hpp
 )
 
 add_library(${PROJECT_NAME} STATIC
@@ -19,6 +21,8 @@ target_include_directories(${PROJECT_NAME}
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES PUBLIC_HEADER ${HEADER_FILES})
+
+add_library(examples::observer ALIAS ${PROJECT_NAME})
     
 if (ENABLE_TESTING)                           
     enable_testing()
@@ -28,6 +32,6 @@ endif()
 install(TARGETS ${PROJECT_NAME}
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
-    PUBLIC_HEADER DESTINATION include/observer
+    PUBLIC_HEADER DESTINATION include
 )
 

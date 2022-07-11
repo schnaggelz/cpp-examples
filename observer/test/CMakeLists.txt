@@ -8,9 +8,15 @@ add_executable(${PROJECT_NAME}
     test_observer.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} 
-    GTest::gtest 
-    GTest::gtest_main
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+        examples::observer
+)
+
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+        GTest::gtest 
+        GTest::gtest_main
 )
 
 add_test(all_tests ${PROJECT_NAME})

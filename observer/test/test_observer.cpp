@@ -2,21 +2,10 @@
 
 #include <typeindex>
 
+#include "observer/event.hpp"
+
 struct TestFixture : testing::Test
 {
-};
-
-template <typename T>
-struct Event
-{
-    using Type = T;
-
-    Event(T type) : m_type(type)
-    {
-    }
-
-    Type m_type;
-    bool m_handled;
 };
 
 enum class ChannelOfferEventType
@@ -33,33 +22,32 @@ enum class ChannelSubscriptionEventType
     UNDEFINED
 };
 
-class ChannelOfferEvent : public Event<ChannelOfferEventType>
+class ChannelOfferEvent : public examples::observer::Event<ChannelOfferEventType>
 {
     ChannelOfferEvent() : Event<ChannelOfferEventType>(ChannelOfferEventType::UNDEFINED){};
     virtual ~ChannelOfferEvent() = default;
 };
 
-class ChannelSubscriptionEvent : public Event<ChannelSubscriptionEventType>
+class ChannelSubscriptionEvent : public examples::observer::Event<ChannelSubscriptionEventType>
 {
-    ChannelSubscriptionEvent() : Event<ChannelSubscriptionEventType>(ChannelSubscriptionEventType::UNDEFINED){};
+    ChannelSubscriptionEvent()
+        : examples::observer::Event<ChannelSubscriptionEventType>(ChannelSubscriptionEventType::UNDEFINED){};
     virtual ~ChannelSubscriptionEvent() = default;
 };
 
 template <typename T>
 struct Dispatcher
 {
-    using SlotType = std::function<void(const Event<T>&)>; // replace by heap free alternative
+    using SlotType = std::function<void(const examples::observer::Event<T>&)>;  // replace by heap free alternative
 
     SlotType m_slot;
 };
 
 class Observer
 {
-    void handle(const Event<ChannelOfferEventType>& event)
+    void handle(const examples::observer::Event<ChannelOfferEventType>& event)
     {
-        if (event.m_type == ChannelOfferEventType::OFFER)
-        {
-
+        if (event.getType() == ChannelOfferEventType::OFFER) {
         }
     }
 };
@@ -67,5 +55,4 @@ class Observer
 TEST_F(TestFixture, Sandbox)
 {
     Dispatcher<ChannelOfferEventType> dispatcher1;
-    
 }

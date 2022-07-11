@@ -1,13 +1,13 @@
 /*******************************************************************************
  * Copyright (C) 2022 Timon Reich
  *
- * Exampls library
+ * C++ examples library
  *
  * License notes see LICENSE.txt
  ******************************************************************************/
 
-#ifndef __EXAMPLES_OBSERVER_HPP__
-#define __EXAMPLES_OBSERVER_HPP__
+#ifndef __EXAMPLES_OBSERVER_OBSERVER_HPP__
+#define __EXAMPLES_OBSERVER_OBSERVER_HPP__
 
 namespace examples
 {
@@ -17,7 +17,7 @@ class Observer
 {
 };
 
-}  // namespace remote
-}  // namespace nxt
+}  // namespace observer
+}  // namespace examples
 
-#endif  // __EXAMPLES_OBSERVER_HPP__
+#endif  // __EXAMPLES_OBSERVER_OBSERVER_HPP__
