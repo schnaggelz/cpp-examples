@@ -16,24 +16,10 @@ enum class ChannelOfferEventType
     UNDEFINED
 };
 
-enum class ChannelSubscriptionEventType
-{
-    SUBSCRIBE,
-    UNSIBSCRIBE,
-    UNDEFINED
-};
-
 struct ChannelOfferEvent : public examples::observer::Event<ChannelOfferEventType>
 {
     ChannelOfferEvent() : Event<ChannelOfferEventType>(ChannelOfferEventType::UNDEFINED){};
     virtual ~ChannelOfferEvent() = default;
-};
-
-struct ChannelSubscriptionEvent : public examples::observer::Event<ChannelSubscriptionEventType>
-{
-    ChannelSubscriptionEvent()
-        : examples::observer::Event<ChannelSubscriptionEventType>(ChannelSubscriptionEventType::UNDEFINED){};
-    virtual ~ChannelSubscriptionEvent() = default;
 };
 
 struct Observer
