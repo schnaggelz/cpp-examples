@@ -11,6 +11,7 @@
 
 #include <array>
 #include <cstdint>
+#include <tuple>
 
 #include "callback/callable.hpp"
 
@@ -19,39 +20,45 @@ namespace examples
 namespace observer
 {
 
-template <typename T, std::uint32_t MaxSlots>
+template <typename EventTypeT, std::uint32_t MaxSlots>
 class Dispatcher
 {
-    using Callable = examples::callbacks::Callable<void(const examples::observer::Event<T>&)>;
-
   public:
-    bool subscribe(T type, const Callable& callable)
+    using Callable = examples::callbacks::Callable<void(const examples::observer::Event<EventTypeT>&)>;
+
+    Dispatcher() = default;
+
+    bool subscribe(EventTypeT type, const Callable& callable)
     {
         if (m_current_idx >= MaxSlots)
         {
             return false;
         }
 
-        m_slots[m_current_idx] = callable;
-        m_current_idx ++;
+        m_slots[m_current_idx] = std::make_pair(type, callable);
+        m_current_idx++;
 
         return true;
     };
 
-    void dispatch(Event<T>& event)
+    void dispatch(Event<EventTypeT>& event)
     {
-        // Loop though all observers. If the event is not handled yet we continue to process it.
-        for (auto&& slot : m_slots)
+        for (const auto& slot : m_slots)
         {
             if (!event.isHandled())
             {
-                slot(event);
+                const auto& callable = std::get<1>(slot);
+
+                if (callable)
+                {
+                    callable(event);
+                }
             }
         }
     };
 
   private:
-    std::array<Callable, MaxSlots> m_slots;
+    std::array<std::pair<EventTypeT, Callable>, MaxSlots> m_slots;
     std::uint32_t m_current_idx = 0;
 };
 

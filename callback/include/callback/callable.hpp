@@ -22,15 +22,29 @@ class Callable;
 template <typename ReturnT, typename... ParamTs>
 class Callable<ReturnT(ParamTs...)>
 {
-  using Stub = ReturnT (*)(void* object, ParamTs...);
-  
+    using Stub = ReturnT (*)(void* object, ParamTs...);
+
   public:
+    ///@brief Default constructors for usage within containers
+    constexpr Callable()
+    {
+    }
+
+    constexpr Callable(const Callable& other) = default;
+
     ///@brief Call the calllable
     ///@param args Function arguments (see ParamTs)
     ///@return Function return value (see ReturnT)
     ReturnT operator()(ParamTs... args) const
     {
         return (*m_stub)(m_object, std::forward<ParamTs>(args)...);
+    }
+
+    ///@brief Check if the callable is valid
+    ///@return True if valid
+    constexpr operator bool() const
+    {
+        return m_stub != nullptr && m_object != nullptr;
     }
 
     ///@brief Create callable from instance and method
@@ -57,7 +71,6 @@ class Callable<ReturnT(ParamTs...)>
     }
 
   private:
-    
     void* m_object = nullptr;
     Stub m_stub = nullptr;
 };
