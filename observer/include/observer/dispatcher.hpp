@@ -9,28 +9,33 @@
 #ifndef __EXAMPLES_OBSERVER_DISPATCHER_HPP__
 #define __EXAMPLES_OBSERVER_DISPATCHER_HPP__
 
-#include "observer/event.hpp"
-
-#include "callback/callable.hpp"
-
 #include <array>
 #include <cstdint>
 #include <tuple>
+#include <type_traits>
+
+#include "callback/callable.hpp"
+#include "observer/event.hpp"
 
 namespace examples
 {
 namespace observer
 {
 
-template <typename EventTypeT, std::uint32_t MaxSlots>
+template <typename EventT, std::uint32_t MaxSlots>
 class Dispatcher
 {
+    using EventType = typename EventT::Type;
+
+    static_assert(std::is_enum<EventType>::value, "EventType must be an enumeration");
+    static_assert(std::is_base_of<Event<EventType>, EventT>::value, "EventT must deribed from Event<EventType>");
+
   public:
-    using Callable = examples::callbacks::Callable<void(const examples::observer::Event<EventTypeT>&)>;
+    using Callable = examples::callbacks::Callable<void(const EventT&)>;
 
     Dispatcher() = default;
 
-    bool subscribe(EventTypeT type, const Callable& callable)
+    bool subscribe(EventType type, const Callable& callable)
     {
         if (m_current_idx >= MaxSlots)
         {
@@ -43,7 +48,7 @@ class Dispatcher
         return true;
     };
 
-    void dispatch(Event<EventTypeT>& event)
+    void dispatch(const EventT& event)
     {
         for (const auto& slot : m_slots)
         {
@@ -60,7 +65,7 @@ class Dispatcher
     };
 
   private:
-    std::array<std::pair<EventTypeT, Callable>, MaxSlots> m_slots;
+    std::array<std::pair<EventType, Callable>, MaxSlots> m_slots;
     std::uint32_t m_current_idx = 0;
 };
 
