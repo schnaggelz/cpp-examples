@@ -40,3 +40,4 @@ install(TARGETS ${PROJECT_NAME}
     PUBLIC_HEADER DESTINATION include
 )
 
+add_executable(shm_demo demo/main.cpp)
