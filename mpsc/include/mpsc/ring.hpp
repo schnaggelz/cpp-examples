@@ -16,30 +16,43 @@ namespace examples
 {
 namespace mpsc
 {
-template<typename T>
 class Ring
 {
   public:
-    Ring() 
-        : m_head(0)
-        , m_tail(0)
+    Ring(std::uint32_t capacity)
+        : m_capacity(capacity)
     {
     }
 
-  private:
-    struct Node
+    const std::uint32_t capacity() const
     {
-        T data;
-        std::atomic<Node*> next;
-    };
+        return m_capacity;
+    }
 
-    typedef char pad[64];
+  protected:
+    char* normalizePtr(char* ptr);
+    char* acquireReadBlock(std::size_t length);
 
-    pad m_pad0;
-    std::atomic<std::uint32_t> m_head;
+  private:
+    std::uint32_t m_capacity;
+    char* m_begin;
+    char* m_end;
 
-    pad m_pad1;
-    std::atomic<std::uint32_t> m_tail;
+    // clang-format off
+    alignas(64)
+    std::atomic<std::uint32_t> m_used;
+
+    alignas(64)
+    std::atomic<std::uint32_t> m_free;
+
+    alignas(64)
+    std::atomic<char*> m_rbuf;
+    std::atomic<char*> m_rptr;
+
+    alignas(64)
+    std::atomic<char*> m_wbuf;
+    std::atomic<char*> m_wptr;
+    // clang-format on
 };
 
 }  // namespace mpsc
