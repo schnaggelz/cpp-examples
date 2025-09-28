@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Bazel C++ Binary",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/${input:binaryPath}",
+      "args": [],
+      "stopAtEntry": true,
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "Bazel Build Target",
+      "miDebuggerPath": "/usr/bin/gdb"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "binaryPath",
+      "type": "promptString",
+      "description": "Enter the path to the built Bazel binary (e.g., bazel-bin/mpsc/mpsc_demo)"
+    }
+  ]
+}
