@@ -5,7 +5,7 @@ project(test_mpsc CXX)
 find_package(GTest REQUIRED)
 
 add_executable(${PROJECT_NAME}
-    test_ring.cpp
+    ring_test.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}
