@@ -1,0 +1,26 @@
+load("@rules_cc//cc:cc_library.bzl", "cc_library")
+load("@rules_cc//cc:cc_binary.bzl", "cc_binary")
+load("@rules_cc//cc:cc_test.bzl", "cc_test")
+
+cc_library(
+    name = "ring",
+    srcs = ["src/ring.cpp"],
+    hdrs = ["include/mpsc/ring.hpp"],
+    includes = ["include"],
+    visibility = ["//visibility:public"],
+)
+
+cc_test(
+    name = "ring_test",
+    srcs = ["test/ring_test.cpp"],
+    deps = [
+        ":ring",
+        "@googletest//:gtest_main",
+    ],
+)
+
+cc_binary(
+    name = "mpsc_demo",
+    srcs = ["demo/main.cpp"],
+    deps = [":ring"],
+)
