@@ -6,8 +6,8 @@ cc_library(
     name = "callback",
     srcs = ["src/callable.cpp"],
     hdrs = ["include/callback/callable.hpp"],
-    visibility = ["//visibility:public"],
     includes = ["include"],
+    visibility = ["//visibility:public"],
 )
 
 cc_test(
@@ -17,6 +17,5 @@ cc_test(
         ":callback",
         "@googletest//:gtest_main",
     ],
-    includes = ["include"],
 )
 
