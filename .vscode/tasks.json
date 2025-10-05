@@ -11,6 +11,13 @@
                 "${input:targetLabel}"
             ],
             "problemMatcher": []
+        },
+        {
+            "label": "Bazel Run Tests with Coverage",
+            "type": "bazel",
+            "command": "coverage",
+            "targets": ["${input:targetLabel}"],
+            "options": ["--instrumentation_filter=.*"],
         }
     ],
     "inputs": [
