@@ -17,9 +17,21 @@ RUN apt update && apt install -y \
     nano \
     git \
     python3-dev \
-    build-essential
+    build-essential \
+    gdb \
+    cmake
+
 RUN apt clean
 
+WORKDIR /tmp
+RUN wget https://github.com/bazelbuild/bazelisk/releases/download/v1.27.0/bazelisk-linux-amd64 && \
+    chmod 755 bazelisk-linux-amd64 && \
+    mv bazelisk-linux-amd64 /usr/local/bin/bazel
+
 # Switch user and set working directory
+RUN mkdir /workspace
+WORKDIR /workspace
 USER ubuntu
-WORKDIR /home/ubuntu
+
+RUN bazel version
+
