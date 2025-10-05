@@ -3,8 +3,6 @@
 #include <gtest/gtest.h>
 
 #include <iostream>
-#include <optional>
-#include <type_traits>
 
 struct TestFixture : testing::Test
 {
