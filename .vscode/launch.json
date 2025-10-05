@@ -2,6 +2,15 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Debug Bazel C++ Binary with LLDB",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/${input:binaryPath}",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "Bazel Build Target",
+    },
+    {
       "name": "Debug Bazel C++ Binary",
       "type": "cppdbg",
       "request": "launch",
@@ -10,7 +19,6 @@
       "stopAtEntry": true,
       "cwd": "${workspaceFolder}",
       "preLaunchTask": "Bazel Build Target",
-      "miDebuggerPath": "/usr/bin/gdb"
     }
   ],
   "inputs": [
