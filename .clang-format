@@ -12,8 +12,6 @@ BraceWrapping:
     AfterEnum: true
     SplitEmptyFunction: true
     AfterNamespace: true
-    AfterFunction: true
-    SplitEmptyFunction: true
     AfterUnion: true
     BeforeElse: true
     BeforeWhile: true

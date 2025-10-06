@@ -41,23 +41,19 @@ struct Class1
 TEST_F(TestFixture, Sandbox)
 {
     Class1 o1;
-
     auto c1 = examples::callbacks::Callable<void(void)>::create<Class1, &Class1::function1>(o1);
-
     c1();
 
     auto c2 = examples::callbacks::Callable<void(int)>::create<Class1, &Class1::function2>(o1);
-
     c2(1);
 
     auto c3 = examples::callbacks::Callable<void(Class1::Data)>::create<Class1, &Class1::function3>(o1);
-
     Class1::Data d3;
     c3(d3);
 
     auto c4 = examples::callbacks::Callable<bool(Class1::Data)>::create<Class1, &Class1::function4>(o1);
-
     Class1::Data d4;
     bool r = c4(d4);
+
     EXPECT_FALSE(!r);
 }

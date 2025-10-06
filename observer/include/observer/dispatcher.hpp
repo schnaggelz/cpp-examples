@@ -11,7 +11,6 @@
 
 #include <array>
 #include <cstdint>
-#include <tuple>
 #include <type_traits>
 
 #include "callback/callable.hpp"
